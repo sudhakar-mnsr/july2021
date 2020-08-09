@@ -1,0 +1,9 @@
+https://www.youtube.com/watch?v=Rp3iZUvXWlM
+
+Ref:
+https://docs.oracle.com/cd/E19693-01/819-0997/aakhb/index.html
+Both client and server authentication involve encrypting some piece of data with one key of a public-private key pair and decrypting it with the other key:
+
+In the case of server authentication, the client encrypts the pre-master secret with the server’s public key. Only the corresponding private key can correctly decrypt the secret, so the client has some assurance that the identity associated with the public key is in fact the server with which the client is connected. Otherwise, the server cannot decrypt the pre-master secret and cannot generate the symmetric keys required for the session, and the session is terminated.
+
+In the case of client authentication, the client encrypts some random data with the client’s private key—that is, it creates a digital signature. The public key in the client’s certificate can correctly validate the digital signature only if the corresponding private key was used. Otherwise, the server cannot validate the digital signature and the session is terminated.
