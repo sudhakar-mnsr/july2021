@@ -1,5 +1,8 @@
 https://www.youtube.com/watch?v=Rp3iZUvXWlM
 
+Programs basic:
+https://venilnoronha.io/a-step-by-step-guide-to-mtls-in-go
+
 Ref:
 https://docs.oracle.com/cd/E19693-01/819-0997/aakhb/index.html
 Both client and server authentication involve encrypting some piece of data with one key of a public-private key pair and decrypting it with the other key:
