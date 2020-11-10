@@ -38,3 +38,9 @@ func (driver *DBClient) GetOriginalURL(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 	} else {
 		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		responseMap := map[string]interface{}{"url": url}
+		response, _ := json.Marshal(responseMap)
+		w.Write(response)
+	}
+}
