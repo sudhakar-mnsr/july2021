@@ -20,3 +20,9 @@ func InitDB() (*sql.DB, error) {
 	var connectionString = fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
+	var err error
+	db, err := sql.Open("postgres", connectionString)
+
+	if err != nil {
+		return nil, err
+	}
