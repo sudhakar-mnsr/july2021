@@ -32,3 +32,11 @@ func InitDB() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	_, err = stmt.Exec()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}
