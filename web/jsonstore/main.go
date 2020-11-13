@@ -12,3 +12,13 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 )
+
+// DBClient stores the database session imformation. Needs to be initialized once
+type DBClient struct {
+	db *gorm.DB
+}
+
+// PackageResponse is the response to be send back for Package
+type PackageResponse struct {
+	Package helper.Package `json:"Package"`
+}
