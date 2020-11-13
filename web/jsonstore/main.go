@@ -30,3 +30,11 @@ func (driver *DBClient) GetPackage(w http.ResponseWriter, r *http.Request) {
 	// Handle response details
 	driver.db.First(&Package, vars["id"])
 	var PackageData interface{}
+	// Unmarshal JSON string to interface
+	json.Unmarshal([]byte(Package.Data), &PackageData)
+	var response = PackageResponse{Package: Package}
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	respJSON, _ := json.Marshal(response)
+	w.Write(respJSON)
+}
