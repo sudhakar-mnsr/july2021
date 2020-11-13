@@ -22,3 +22,11 @@ type DBClient struct {
 type PackageResponse struct {
 	Package helper.Package `json:"Package"`
 }
+
+// GetPackage fetches a package
+func (driver *DBClient) GetPackage(w http.ResponseWriter, r *http.Request) {
+	var Package = helper.Package{}
+	vars := mux.Vars(r)
+	// Handle response details
+	driver.db.First(&Package, vars["id"])
+	var PackageData interface{}
