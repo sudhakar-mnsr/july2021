@@ -45,3 +45,9 @@ func (driver *DBClient) GetPackagesbyWeight(w http.ResponseWriter, r *http.Reque
 	weight := r.FormValue("weight")
 	// Handle response details
 	var query = "select * from \"Package\" where data->>'weight'=?"
+	driver.db.Raw(query, weight).Scan(&packages)
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	respJSON, _ := json.Marshal(packages)
+	w.Write(respJSON)
+}
