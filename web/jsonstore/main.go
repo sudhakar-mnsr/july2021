@@ -38,3 +38,10 @@ func (driver *DBClient) GetPackage(w http.ResponseWriter, r *http.Request) {
 	respJSON, _ := json.Marshal(response)
 	w.Write(respJSON)
 }
+
+// GetPackagesbyWeight fetches all packages with given weight
+func (driver *DBClient) GetPackagesbyWeight(w http.ResponseWriter, r *http.Request) {
+	var packages []helper.Package
+	weight := r.FormValue("weight")
+	// Handle response details
+	var query = "select * from \"Package\" where data->>'weight'=?"
