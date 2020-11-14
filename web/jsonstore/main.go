@@ -63,3 +63,13 @@ func (driver *DBClient) PostPackage(w http.ResponseWriter, r *http.Request) {
 	response, _ := json.Marshal(responseMap)
 	w.Write(response)
 }
+
+func main() {
+	db, err := helper.InitDB()
+	if err != nil {
+		panic(err)
+	}
+	dbclient := &DBClient{db: db}
+	if err != nil {
+		panic(err)
+	}
