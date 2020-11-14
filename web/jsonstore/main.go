@@ -51,3 +51,10 @@ func (driver *DBClient) GetPackagesbyWeight(w http.ResponseWriter, r *http.Reque
 	respJSON, _ := json.Marshal(packages)
 	w.Write(respJSON)
 }
+
+// PostPackage saves a package
+func (driver *DBClient) PostPackage(w http.ResponseWriter, r *http.Request) {
+	var Package = helper.Package{}
+	postBody, _ := ioutil.ReadAll(r.Body)
+	Package.Data = string(postBody)
+	driver.db.Save(&Package)
