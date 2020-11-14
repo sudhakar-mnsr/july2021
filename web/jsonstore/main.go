@@ -80,3 +80,12 @@ func main() {
 	r.HandleFunc("/v1/package/{id:[a-zA-Z0-9]*}", dbclient.GetPackage).Methods("GET")
 	r.HandleFunc("/v1/package", dbclient.PostPackage).Methods("POST")
 	r.HandleFunc("/v1/package", dbclient.GetPackagesbyWeight).Methods("GET")
+	srv := &http.Server{
+		Handler: r,
+		Addr:    "127.0.0.1:8000",
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	log.Fatal(srv.ListenAndServe())
+}
