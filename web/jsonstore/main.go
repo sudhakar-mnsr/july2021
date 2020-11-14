@@ -73,3 +73,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
+	// Create a new router
+	r := mux.NewRouter()
+	// Attach an elegant path with handler
+	r.HandleFunc("/v1/package/{id:[a-zA-Z0-9]*}", dbclient.GetPackage).Methods("GET")
+	r.HandleFunc("/v1/package", dbclient.PostPackage).Methods("POST")
+	r.HandleFunc("/v1/package", dbclient.GetPackagesbyWeight).Methods("GET")
