@@ -58,3 +58,8 @@ func (driver *DBClient) PostPackage(w http.ResponseWriter, r *http.Request) {
 	postBody, _ := ioutil.ReadAll(r.Body)
 	Package.Data = string(postBody)
 	driver.db.Save(&Package)
+	responseMap := map[string]interface{}{"id": Package.ID}
+	w.Header().Set("Content-Type", "application/json")
+	response, _ := json.Marshal(responseMap)
+	w.Write(response)
+}
