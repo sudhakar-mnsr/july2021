@@ -36,3 +36,10 @@ func (Package) TableName() string {
 	return "Package"
 }
 
+func InitDB() (*gorm.DB, error) {
+	var connectionString = fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", user, password, host, dbname)
+	var err error
+	db, err := gorm.Open("postgres", connectionString)
+	if err != nil {
+		return nil, err
+	}
