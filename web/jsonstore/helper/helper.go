@@ -26,3 +26,13 @@ type Package struct {
 	gorm.Model
 	Data string `sql:"type:JSONB NOT NULL DEFAULT '{}'::JSONB"`
 }
+
+// GORM creates tables with plural names. Use this to suppress it
+func (Shipment) TableName() string {
+	return "Shipment"
+}
+
+func (Package) TableName() string {
+	return "Package"
+}
+
