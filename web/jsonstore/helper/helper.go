@@ -43,3 +43,15 @@ func InitDB() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	/*
+		// The below AutoMigrate is equivalent to this
+		if !db.HasTable("Shipment") {
+			db.CreateTable(&Shipment{})
+		}
+		if !db.HasTable("Package") {
+			db.CreateTable(&Package{})
+		}
+	*/
+	db.AutoMigrate(&Shipment{}, &Package{})
+	return db, nil
+}
