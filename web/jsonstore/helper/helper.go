@@ -14,3 +14,15 @@ const (
 	password = "passme123"
 	dbname   = "mydb"
 )
+
+
+type Shipment struct {
+	gorm.Model
+	Packages []Package
+	Data     string `sql:"type:JSONB NOT NULL DEFAULT '{}'::JSONB" json:"-"`
+}
+
+type Package struct {
+	gorm.Model
+	Data string `sql:"type:JSONB NOT NULL DEFAULT '{}'::JSONB"`
+}
