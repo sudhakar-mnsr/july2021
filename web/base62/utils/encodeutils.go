@@ -24,3 +24,13 @@ func ToBase62(num int) string{
 
     return string(res)
 }
+
+// Function decodes a given base62 string to datbase ID
+func ToBase10(str string) int{
+    res := 0
+    for _, r := range str {
+        res = (b * res) + strings.Index(base, string(r))
+    }
+    return res
+}
+
