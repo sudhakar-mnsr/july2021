@@ -14,3 +14,13 @@ func ToBase62(num int) string{
     res := string(base[r])
     div := num / b
     q := int(math.Floor(float64(div)))
+
+    for q != 0 {
+        r = q % b
+        temp := q / b
+        q = int(math.Floor(float64(temp)))
+        res = string(base[int(r)]) + res
+    }
+
+    return string(res)
+}
