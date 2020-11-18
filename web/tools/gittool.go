@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-
 	"github.com/levigross/grequests"
 	"github.com/urfave/cli"
 )
@@ -74,47 +73,47 @@ func createGist(url string, args []string) *grequests.Response {
 }
 
 func main() {
-	app := cli.NewApp()
-	// define command for our client
-	app.Commands = []cli.Command{
-		{
-			Name:    "fetch",
-			Aliases: []string{"f"},
-			Usage:   "Fetch the repo details with user. [Usage]: githubAPI fetch user",
-			Action: func(c *cli.Context) error {
-				if c.NArg() > 0 {
-					// Github API Logic
-					var repos []Repo
-					user := c.Args()[0]
-					var repoUrl = fmt.Sprintf("https://api.github.com/users/%s/repos", user)
-					resp := getStats(repoUrl)
-					resp.JSON(&repos)
-					log.Println(repos)
-				} else {
-					log.Println("Please give a username. See -h to see help")
-				}
-				return nil
-			},
-		},
-		{
-			Name:    "create",
-			Aliases: []string{"c"},
-			Usage:   "Creates a gist from the given text. [Usage]: githubAPI name 'description' sample.txt",
-			Action: func(c *cli.Context) error {
-				if c.NArg() > 1 {
-					// Github API Logic
-					args := c.Args()
-					var postUrl = "https://api.github.com/gists"
-					resp := createGist(postUrl, args)
-					log.Println(resp.String())
-				} else {
-					log.Println("Please give sufficient arguments. See -h to see help")
-				}
-				return nil
-			},
-		},
-	}
-
-	app.Version = "1.0"
-	app.Run(os.Args)
+   app := cli.NewApp()
+   // define command for our client
+   app.Commands = []cli.Command{
+   	{
+   		Name:    "fetch",
+   		Aliases: []string{"f"},
+   		Usage:   "Fetch the repo details with user. [Usage]: githubAPI fetch user",
+   		Action: func(c *cli.Context) error {
+   			if c.NArg() > 0 {
+   				// Github API Logic
+   				var repos []Repo
+   				user := c.Args()[0]
+   				var repoUrl = fmt.Sprintf("https://api.github.com/users/%s/repos", user)
+   				resp := getStats(repoUrl)
+   				resp.JSON(&repos)
+   				log.Println(repos)
+   			} else {
+   				log.Println("Please give a username. See -h to see help")
+   			}
+   			return nil
+   		},
+   	},
+   	{
+   		Name:    "create",
+   		Aliases: []string{"c"},
+   		Usage:   "Creates a gist from the given text. [Usage]: githubAPI name 'description' sample.txt",
+   		Action: func(c *cli.Context) error {
+   			if c.NArg() > 1 {
+   				// Github API Logic
+   				args := c.Args()
+   				var postUrl = "https://api.github.com/gists"
+   				resp := createGist(postUrl, args)
+   				log.Println(resp.String())
+   			} else {
+   				log.Println("Please give sufficient arguments. See -h to see help")
+   			}
+   			return nil
+   		},
+   	},
+   }
+   
+   app.Version = "1.0"
+   app.Run(os.Args)
 }
