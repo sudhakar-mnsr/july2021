@@ -65,3 +65,10 @@ func createGist(url string, args []string) *grequests.Response {
 	var requestOptions_copy = requestOptions
 	// Add data to JSON field
 	requestOptions_copy.JSON = string(postBody)
+	// make a Post request to Github
+	resp, err := grequests.Post(url, requestOptions_copy)
+	if err != nil {
+		log.Println("Create request failed for Github API")
+	}
+	return resp
+}
