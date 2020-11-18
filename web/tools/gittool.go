@@ -72,3 +72,13 @@ func createGist(url string, args []string) *grequests.Response {
 	}
 	return resp
 }
+
+func main() {
+	app := cli.NewApp()
+	// define command for our client
+	app.Commands = []cli.Command{
+		{
+			Name:    "fetch",
+			Aliases: []string{"f"},
+			Usage:   "Fetch the repo details with user. [Usage]: githubAPI fetch user",
+			Action: func(c *cli.Context) error {
