@@ -90,3 +90,10 @@ func main() {
 					resp := getStats(repoUrl)
 					resp.JSON(&repos)
 					log.Println(repos)
+				} else {
+					log.Println("Please give a username. See -h to see help")
+				}
+				return nil
+			},
+		},
+		{
