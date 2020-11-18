@@ -60,3 +60,8 @@ func createGist(url string, args []string) *grequests.Response {
 		file.Content = string(dat)
 		fileContents[args[i]] = file
 	}
+	var gist = Gist{Description: description, Public: true, Files: fileContents}
+	var postBody, _ = json.Marshal(gist)
+	var requestOptions_copy = requestOptions
+	// Add data to JSON field
+	requestOptions_copy.JSON = string(postBody)
