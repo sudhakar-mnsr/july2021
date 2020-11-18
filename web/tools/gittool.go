@@ -27,3 +27,9 @@ type Repo struct {
 type File struct {
 	Content string `json:"content"`
 }
+
+type Gist struct {
+	Description string          `json:"description"`
+	Public      bool            `json:"public"`
+	Files       map[string]File `json:"files"`
+}
