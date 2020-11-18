@@ -97,3 +97,11 @@ func main() {
 			},
 		},
 		{
+			Name:    "create",
+			Aliases: []string{"c"},
+			Usage:   "Creates a gist from the given text. [Usage]: githubAPI name 'description' sample.txt",
+			Action: func(c *cli.Context) error {
+				if c.NArg() > 1 {
+					// Github API Logic
+					args := c.Args()
+					var postUrl = "https://api.github.com/gists"
