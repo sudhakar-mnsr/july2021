@@ -105,3 +105,16 @@ func main() {
 					// Github API Logic
 					args := c.Args()
 					var postUrl = "https://api.github.com/gists"
+					resp := createGist(postUrl, args)
+					log.Println(resp.String())
+				} else {
+					log.Println("Please give sufficient arguments. See -h to see help")
+				}
+				return nil
+			},
+		},
+	}
+
+	app.Version = "1.0"
+	app.Run(os.Args)
+}
