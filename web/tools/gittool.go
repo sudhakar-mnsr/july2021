@@ -82,3 +82,11 @@ func main() {
 			Aliases: []string{"f"},
 			Usage:   "Fetch the repo details with user. [Usage]: githubAPI fetch user",
 			Action: func(c *cli.Context) error {
+				if c.NArg() > 0 {
+					// Github API Logic
+					var repos []Repo
+					user := c.Args()[0]
+					var repoUrl = fmt.Sprintf("https://api.github.com/users/%s/repos", user)
+					resp := getStats(repoUrl)
+					resp.JSON(&repos)
+					log.Println(repos)
