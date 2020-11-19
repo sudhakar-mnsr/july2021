@@ -18,3 +18,15 @@ func main() {
 		},
 	}
 
+	app.Version = "1.0"
+	// define action
+	app.Action = func(c *cli.Context) error {
+		var args []string
+		if c.NArg() > 0 {
+			// Fetch arguments in a array
+			args = c.Args()
+			personName := args[0]
+			marks := args[1:len(args)]
+			log.Println("Person: ", personName)
+			log.Println("marks", marks)
+		}
