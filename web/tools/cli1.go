@@ -25,3 +25,12 @@ func main() {
 		},
 	}
 	// This function parses and brings data in cli.Context struct
+	app.Action = func(c *cli.Context) error {
+		// c.String, c.Int looks for value of given flag
+		log.Printf("Hello %s (%d years), Welcome to the command line world", c.String("name"), c.Int("age"))
+		return nil
+	}
+
+	// Pass os.Args to cli app to parse content
+	app.Run(os.Args)
+}
