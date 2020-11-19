@@ -18,3 +18,10 @@ func main() {
 			Value: "stranger",
 			Usage: "your wonderful name",
 		},
+		cli.IntFlag{
+			Name:  "age",
+			Value: 0,
+			Usage: "your graceful age",
+		},
+	}
+	// This function parses and brings data in cli.Context struct
