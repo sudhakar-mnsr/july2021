@@ -30,3 +30,16 @@ func main() {
 			log.Println("Person: ", personName)
 			log.Println("marks", marks)
 		}
+		}
+		// check the flag value
+		if c.String("save") == "no" {
+			log.Println("Skipping saving to the database")
+		} else {
+			// Add database logic here
+			log.Println("Saving to the database", args)
+		}
+		return nil
+	}
+
+	app.Run(os.Args)
+}
