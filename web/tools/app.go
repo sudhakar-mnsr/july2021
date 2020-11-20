@@ -42,3 +42,12 @@ type App struct {
 	// List of commands to execute
 	Commands []Command
 	// List of flags to parse
+	Flags []Flag
+	// Boolean to enable bash completion commands
+	EnableBashCompletion bool
+	// Boolean to hide built-in help command
+	HideHelp bool
+	// Boolean to hide built-in version flag and the VERSION section of help
+	HideVersion bool
+	// Populate on app startup, only gettable through method Categories()
+	categories CommandCategories
