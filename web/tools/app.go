@@ -59,3 +59,14 @@ type App struct {
 	// An action to execute after any subcommands are run, but after the subcommand has finished
 	// It is run even if Action() panics
 	After AfterFunc
+	// The action to execute when no subcommands are specified
+	// Expects a `cli.ActionFunc` but will accept the *deprecated* signature of `func(*cli.Context) {}`
+	// *Note*: support for the deprecated `Action` signature will be removed in a future version
+	Action interface{}
+
+	// Execute this function if the proper command cannot be found
+	CommandNotFound CommandNotFoundFunc
+	// Execute this function if an usage error occurs
+	OnUsageError OnUsageErrorFunc
+	// Compilation date
+	Compiled time.Time
