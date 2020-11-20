@@ -103,3 +103,19 @@ func compileTime() time.Time {
 	}
 	return info.ModTime()
 }
+
+// NewApp creates a new cli Application with some reasonable defaults for Name,
+// Usage, Version and Action.
+func NewApp() *App {
+	return &App{
+		Name:         filepath.Base(os.Args[0]),
+		HelpName:     filepath.Base(os.Args[0]),
+		Usage:        "A new cli application",
+		UsageText:    "",
+		Version:      "0.0.0",
+		BashComplete: DefaultAppComplete,
+		Action:       helpCommand.Action,
+		Compiled:     compileTime(),
+		Writer:       os.Stdout,
+	}
+}
