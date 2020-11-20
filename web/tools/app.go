@@ -51,3 +51,11 @@ type App struct {
 	HideVersion bool
 	// Populate on app startup, only gettable through method Categories()
 	categories CommandCategories
+	// An action to execute when the bash-completion flag is set
+	BashComplete BashCompleteFunc
+	// An action to execute before any subcommands are run, but after the context is ready
+	// If a non-nil error is returned, no subcommands are run
+	Before BeforeFunc
+	// An action to execute after any subcommands are run, but after the subcommand has finished
+	// It is run even if Action() panics
+	After AfterFunc
