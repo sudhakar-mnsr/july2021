@@ -21,3 +21,15 @@ var (
 		fmt.Sprintf("Must be `func(*Context`)` or `func(*Context) error).  %s", contactSysadmin)+
 		fmt.Sprintf("See %s", appActionDeprecationURL), 2)
 )
+
+// App is the main structure of a cli application. It is recommended that
+// an app be created with the cli.NewApp() function
+type App struct {
+	// The name of the program. Defaults to path.Base(os.Args[0])
+	Name string
+	// Full name of command for help, defaults to Name
+	HelpName string
+	// Description of the program.
+	Usage string
+	// Text to override the USAGE section of help
+	UsageText string
