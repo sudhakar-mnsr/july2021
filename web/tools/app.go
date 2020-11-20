@@ -70,3 +70,13 @@ type App struct {
 	OnUsageError OnUsageErrorFunc
 	// Compilation date
 	Compiled time.Time
+        // List of all authors who contributed
+	Authors []Author
+	// Copyright of the binary if any
+	Copyright string
+	// Name of Author (Note: Use App.Authors, this is deprecated)
+	Author string
+	// Email of Author (Note: Use App.Authors, this is deprecated)
+	Email string
+	// Writer writer to write output to
+	Writer io.Writer
