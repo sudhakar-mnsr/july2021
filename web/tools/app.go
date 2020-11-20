@@ -33,3 +33,12 @@ type App struct {
 	Usage string
 	// Text to override the USAGE section of help
 	UsageText string
+	// Description of the program argument format.
+	ArgsUsage string
+	// Version of the program
+	Version string
+	// Description of the program
+	Description string
+	// List of commands to execute
+	Commands []Command
+	// List of flags to parse
