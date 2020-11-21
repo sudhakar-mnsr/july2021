@@ -158,3 +158,12 @@ func (a *App) Setup() {
 		a.categories = a.categories.AddCommand(command.Category, command)
 	}
 	sort.Sort(a.categories)
+
+	if a.Metadata == nil {
+		a.Metadata = make(map[string]interface{})
+	}
+
+	if a.Writer == nil {
+		a.Writer = os.Stdout
+	}
+}
