@@ -200,3 +200,14 @@ func (a *App) Run(arguments []string) (err error) {
 	if checkCompletions(context) {
 		return nil
 	}
+
+	if err != nil {
+		if a.OnUsageError != nil {
+			err := a.OnUsageError(context, err, false)
+			HandleExitCoder(err)
+			return err
+		}
+		fmt.Fprintf(a.Writer, "%s %s\n\n", "Incorrect Usage.", err.Error())
+		ShowAppHelp(context)
+		return err
+	}
