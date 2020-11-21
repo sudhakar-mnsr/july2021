@@ -250,3 +250,14 @@ func (a *App) Run(arguments []string) (err error) {
 			return c.Run(context)
 		}
 	}
+
+	if a.Action == nil {
+		a.Action = helpCommand.Action
+	}
+
+	// Run default Action
+	err = HandleAction(a.Action, context)
+
+	HandleExitCoder(err)
+	return err
+}
