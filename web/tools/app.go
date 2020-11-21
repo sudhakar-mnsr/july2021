@@ -142,3 +142,14 @@ func (a *App) Setup() {
 		newCmds = append(newCmds, c)
 	}
 	a.Commands = newCmds
+
+	if a.Command(helpCommand.Name) == nil && !a.HideHelp {
+		a.Commands = append(a.Commands, helpCommand)
+		if (HelpFlag != BoolFlag{}) {
+			a.appendFlag(HelpFlag)
+		}
+	}
+
+	if !a.HideVersion {
+		a.appendFlag(VersionFlag)
+	}
