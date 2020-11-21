@@ -133,3 +133,12 @@ func (a *App) Setup() {
 	if a.Author != "" || a.Email != "" {
 		a.Authors = append(a.Authors, Author{Name: a.Author, Email: a.Email})
 	}
+
+	newCmds := []Command{}
+	for _, c := range a.Commands {
+		if c.HelpName == "" {
+			c.HelpName = fmt.Sprintf("%s %s", a.HelpName, c.Name)
+		}
+		newCmds = append(newCmds, c)
+	}
+	a.Commands = newCmds
