@@ -220,3 +220,14 @@ func (a *App) Run(arguments []string) (err error) {
 		ShowVersion(context)
 		return nil
 	}
+	if a.After != nil {
+		defer func() {
+			if afterErr := a.After(context); afterErr != nil {
+				if err != nil {
+					err = NewMultiError(err, afterErr)
+				} else {
+					err = afterErr
+				}
+			}
+		}()
+	}
