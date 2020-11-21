@@ -195,3 +195,8 @@ func (a *App) Run(arguments []string) (err error) {
 		ShowAppHelp(context)
 		return nerr
 	}
+	context.shellComplete = shellComplete
+
+	if checkCompletions(context) {
+		return nil
+	}
