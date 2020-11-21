@@ -167,3 +167,22 @@ func (a *App) Setup() {
 		a.Writer = os.Stdout
 	}
 }
+
+// Run is the entry point to the cli app. Parses the arguments slice and routes
+// to the proper flag/args combination
+func (a *App) Run(arguments []string) (err error) {
+	a.Setup()
+
+	// handle the completion flag separately from the flagset since
+	// completion could be attempted after a flag, but before its value was put
+	// on the command line. this causes the flagset to interpret the completion
+	// flag name as the value of the flag before it which is undesirable
+	// note that we can only do this because the shell autocomplete function
+	// always appends the completion flag at the end of the command
+	shellComplete, arguments := checkShellCompleteFlag(a, arguments)
+
+	// parse flags
+	set, err := flagSet(a.Name, a.Flags)
+	if err != nil {
+		return err
+	}
