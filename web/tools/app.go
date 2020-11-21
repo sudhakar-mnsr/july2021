@@ -119,3 +119,17 @@ func NewApp() *App {
 		Writer:       os.Stdout,
 	}
 }
+
+// Setup runs initialization code to ensure all data structures are ready for
+// `Run` or inspection prior to `Run`.  It is internally called by `Run`, but
+// will return early if setup has already happened.
+func (a *App) Setup() {
+	if a.didSetup {
+		return
+	}
+
+	a.didSetup = true
+
+	if a.Author != "" || a.Email != "" {
+		a.Authors = append(a.Authors, Author{Name: a.Author, Email: a.Email})
+	}
