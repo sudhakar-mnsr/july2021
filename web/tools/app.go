@@ -153,3 +153,8 @@ func (a *App) Setup() {
 	if !a.HideVersion {
 		a.appendFlag(VersionFlag)
 	}
+	a.categories = CommandCategories{}
+	for _, command := range a.Commands {
+		a.categories = a.categories.AddCommand(command.Category, command)
+	}
+	sort.Sort(a.categories)
