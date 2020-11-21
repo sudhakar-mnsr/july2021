@@ -240,3 +240,13 @@ func (a *App) Run(arguments []string) (err error) {
 			return err
 		}
 	}
+
+
+	args := context.Args()
+	if args.Present() {
+		name := args.First()
+		c := a.Command(name)
+		if c != nil {
+			return c.Run(context)
+		}
+	}
