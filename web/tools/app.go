@@ -231,3 +231,12 @@ func (a *App) Run(arguments []string) (err error) {
 			}
 		}()
 	}
+	if a.Before != nil {
+		beforeErr := a.Before(context)
+		if beforeErr != nil {
+			ShowAppHelp(context)
+			HandleExitCoder(beforeErr)
+			err = beforeErr
+			return err
+		}
+	}
