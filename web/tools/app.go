@@ -211,3 +211,12 @@ func (a *App) Run(arguments []string) (err error) {
 		ShowAppHelp(context)
 		return err
 	}
+	if !a.HideHelp && checkHelp(context) {
+		ShowAppHelp(context)
+		return nil
+	}
+
+	if !a.HideVersion && checkVersion(context) {
+		ShowVersion(context)
+		return nil
+	}
