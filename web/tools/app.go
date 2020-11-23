@@ -261,3 +261,15 @@ func (a *App) Run(arguments []string) (err error) {
 	HandleExitCoder(err)
 	return err
 }
+
+// RunAndExitOnError calls .Run() and exits non-zero if an error was returned
+//
+// Deprecated: instead you should return an error that fulfills cli.ExitCoder
+// to cli.App.Run. This will cause the application to exit with the given eror
+// code in the cli.ExitCoder
+func (a *App) RunAndExitOnError() {
+	if err := a.Run(os.Args); err != nil {
+		fmt.Fprintln(a.errWriter(), err)
+		OsExiter(1)
+	}
+}
