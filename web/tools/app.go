@@ -332,3 +332,13 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		ShowSubcommandHelp(context)
 		return err
 	}
+
+	if len(a.Commands) > 0 {
+		if checkSubcommandHelp(context) {
+			return nil
+		}
+	} else {
+		if checkCommandHelp(ctx, context.Args().First()) {
+			return nil
+		}
+	}
