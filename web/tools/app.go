@@ -317,3 +317,7 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		}
 		return nerr
 	}
+
+	if checkCompletions(context) {
+		return nil
+	}
