@@ -321,3 +321,14 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 	if checkCompletions(context) {
 		return nil
 	}
+
+	if err != nil {
+		if a.OnUsageError != nil {
+			err = a.OnUsageError(context, err, true)
+			HandleExitCoder(err)
+			return err
+		}
+		fmt.Fprintf(a.Writer, "%s %s\n\n", "Incorrect Usage.", err.Error())
+		ShowSubcommandHelp(context)
+		return err
+	}
