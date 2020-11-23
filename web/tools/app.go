@@ -342,3 +342,17 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 			return nil
 		}
 	}
+
+	if a.After != nil {
+		defer func() {
+			afterErr := a.After(context)
+			if afterErr != nil {
+				HandleExitCoder(err)
+				if err != nil {
+					err = NewMultiError(err, afterErr)
+				} else {
+					err = afterErr
+				}
+			}
+		}()
+	}
