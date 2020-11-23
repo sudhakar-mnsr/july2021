@@ -273,3 +273,16 @@ func (a *App) RunAndExitOnError() {
 		OsExiter(1)
 	}
 }
+
+// RunAsSubcommand invokes the subcommand given the context, parses ctx.Args() to
+// generate command-specific flags
+func (a *App) RunAsSubcommand(ctx *Context) (err error) {
+	// append help to commands
+	if len(a.Commands) > 0 {
+		if a.Command(helpCommand.Name) == nil && !a.HideHelp {
+			a.Commands = append(a.Commands, helpCommand)
+			if (HelpFlag != BoolFlag{}) {
+				a.appendFlag(HelpFlag)
+			}
+		}
+	}
