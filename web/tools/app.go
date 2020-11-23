@@ -306,3 +306,14 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 	err = set.Parse(ctx.Args().Tail())
 	nerr := normalizeFlags(a.Flags, set)
 	context := NewContext(a, set, ctx)
+
+	if nerr != nil {
+		fmt.Fprintln(a.Writer, nerr)
+		fmt.Fprintln(a.Writer)
+		if len(a.Commands) > 0 {
+			ShowSubcommandHelp(context)
+		} else {
+			ShowCommandHelp(ctx, context.Args().First())
+		}
+		return nerr
+	}
