@@ -295,3 +295,14 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		newCmds = append(newCmds, c)
 	}
 	a.Commands = newCmds
+
+	// parse flags
+	set, err := flagSet(a.Name, a.Flags)
+	if err != nil {
+		return err
+	}
+
+	set.SetOutput(ioutil.Discard)
+	err = set.Parse(ctx.Args().Tail())
+	nerr := normalizeFlags(a.Flags, set)
+	context := NewContext(a, set, ctx)
