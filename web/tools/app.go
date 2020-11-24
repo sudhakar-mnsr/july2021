@@ -366,3 +366,11 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		}
 	}
 
+	args := context.Args()
+	if args.Present() {
+		name := args.First()
+		c := a.Command(name)
+		if c != nil {
+			return c.Run(context)
+		}
+	}
