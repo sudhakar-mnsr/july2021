@@ -356,3 +356,13 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 			}
 		}()
 	}
+
+	if a.Before != nil {
+		beforeErr := a.Before(context)
+		if beforeErr != nil {
+			HandleExitCoder(beforeErr)
+			err = beforeErr
+			return err
+		}
+	}
+
