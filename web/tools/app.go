@@ -381,3 +381,15 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 	HandleExitCoder(err)
 	return err
 }
+
+
+// Command returns the named command on App. Returns nil if the command does not exist
+func (a *App) Command(name string) *Command {
+	for _, c := range a.Commands {
+		if c.HasName(name) {
+			return &c
+		}
+	}
+
+	return nil
+}
