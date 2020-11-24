@@ -393,3 +393,8 @@ func (a *App) Command(name string) *Command {
 
 	return nil
 }
+
+// Categories returns a slice containing all the categories with the commands they contain
+func (a *App) Categories() CommandCategories {
+	return a.categories
+}
