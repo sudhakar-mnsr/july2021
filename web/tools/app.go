@@ -374,3 +374,10 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 			return c.Run(context)
 		}
 	}
+
+	// Run default Action
+	err = HandleAction(a.Action, context)
+
+	HandleExitCoder(err)
+	return err
+}
