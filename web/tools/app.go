@@ -417,3 +417,14 @@ func (a *App) VisibleCategories() []*CommandCategory {
 	}
 	return ret
 }
+
+// VisibleCommands returns a slice of the Commands with Hidden=false
+func (a *App) VisibleCommands() []Command {
+	ret := []Command{}
+	for _, command := range a.Commands {
+		if !command.Hidden {
+			ret = append(ret, command)
+		}
+	}
+	return ret
+}
