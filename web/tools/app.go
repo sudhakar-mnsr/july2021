@@ -475,3 +475,11 @@ func (a Author) String() string {
 
 	return fmt.Sprintf("%v%v", a.Name, e)
 }
+
+// HandleAction attempts to figure out which Action signature was used.  If
+// it's an ActionFunc or a func with the legacy signature for Action, the func
+// is run!
+func HandleAction(action interface{}, context *Context) (err error) {
+	if a, ok := action.(ActionFunc); ok {
+		return a(context)
+	} else if a, ok := action.(func(*Context) error); ok {
