@@ -407,3 +407,13 @@ func (a *App) VisibleCategories() []*CommandCategory {
 		if visible := func() *CommandCategory {
 			for _, command := range category.Commands {
 				if !command.Hidden {
+					return category
+				}
+			}
+			return nil
+		}(); visible != nil {
+			ret = append(ret, visible)
+		}
+	}
+	return ret
+}
