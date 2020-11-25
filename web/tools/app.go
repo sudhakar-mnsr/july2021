@@ -483,3 +483,11 @@ func HandleAction(action interface{}, context *Context) (err error) {
 	if a, ok := action.(ActionFunc); ok {
 		return a(context)
 	} else if a, ok := action.(func(*Context) error); ok {
+		return a(context)
+	} else if a, ok := action.(func(*Context)); ok { // deprecated function signature
+		a(context)
+		return nil
+	} else {
+		return errInvalidActionType
+	}
+}
