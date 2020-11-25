@@ -453,3 +453,9 @@ func (a *App) errWriter() io.Writer {
 
 	return a.ErrWriter
 }
+
+func (a *App) appendFlag(flag Flag) {
+	if !a.hasFlag(flag) {
+		a.Flags = append(a.Flags, flag)
+	}
+}
