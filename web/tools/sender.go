@@ -38,3 +38,11 @@ func main() {
 		ContentType: "text/plain",
 		Body:        []byte(serverTime.String()),
 	}
+
+	err = channel.Publish(
+		"",             // exchange
+		testQueue.Name, // routing key(Queue)
+		false,          // mandatory
+		false,          // immediate
+		message,
+	)
