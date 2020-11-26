@@ -46,3 +46,7 @@ func main() {
 		false,          // immediate
 		message,
 	)
+
+	handleError(err, "Failed to publish a message")
+	log.Println("Successfully published a message to the queue")
+}
