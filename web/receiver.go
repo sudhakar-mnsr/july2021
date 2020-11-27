@@ -29,3 +29,15 @@ func main() {
 		false,  // No Waiting time
 		nil,    // Extra args
 	)
+
+	handleError(err, "Queue creation failed")
+
+	messages, err := channel.Consume(
+		testQueue.Name, // queue
+		"",             // consumer
+		true,           // auto-acknowledge
+		false,          // exclusive
+		false,          // no-local
+		false,          // no-wait
+		nil,            // args
+	)
