@@ -41,3 +41,16 @@ func main() {
 		false,          // no-wait
 		nil,            // args
 	)
+
+	handleError(err, "Failed to register a consumer")
+
+	go func() {
+		for message := range messages {
+			log.Printf("Received a message from the queue: %s", message.Body)
+		}
+	}()
+
+	log.Println("Worker has started")
+	wait := make(chan bool)
+	<-wait
+}
