@@ -57,3 +57,9 @@ func main() {
 	router.HandleFunc("/job/mail", jobServer.asyncMailHandler)
 	router.HandleFunc("/job/callback", jobServer.asyncCallbackHandler)
 
+	httpServer := &http.Server{
+		Handler:      router,
+		Addr:         hostString,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
