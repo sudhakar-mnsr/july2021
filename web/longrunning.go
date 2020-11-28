@@ -40,3 +40,13 @@ func getServer(name string) JobServer {
 	return JobServer{Conn: conn, Channel: channel, Queue: jobQueue}
 }
 
+func main() {
+	jobServer := getServer(queueName)
+
+	// Start Workers
+	go func(conn *amqp.Connection) {
+		workerProcess := Workers{
+			conn: jobServer.Conn,
+		}
+		workerProcess.run()
+	}(jobServer.Conn)
