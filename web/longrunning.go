@@ -36,3 +36,7 @@ func getServer(name string) JobServer {
 		false, // No Waiting time
 		nil,   // Extra args
 	)
+	handleError(err, "Job queue creation failed")
+	return JobServer{Conn: conn, Channel: channel, Queue: jobQueue}
+}
+
