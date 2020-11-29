@@ -71,3 +71,9 @@ func (w *Workers) dbWork(job models.Job) {
 	time.Sleep(2 * time.Second)
 	log.Printf("Worker %s: saving data to database..., JOB: %s", job.Type, job.ID)
 }
+
+func (w *Workers) callbackWork(job models.Job) {
+	log.Printf("Worker %s: performing some long running process..., JOB: %s", job.Type, job.ID)
+	time.Sleep(10 * time.Second)
+	log.Printf("Worker %s: posting the data back to the given callback..., JOB: %s", job.Type, job.ID)
+}
