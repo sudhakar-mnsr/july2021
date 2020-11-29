@@ -50,3 +50,11 @@ func (w *Workers) run() {
 			log.Printf("Workers received a message from the queue: %s", job)
 			handleError(err, "Unable to load queue message")
 
+			switch job.Type {
+			case "A":
+				w.dbWork(job)
+			case "B":
+				w.callbackWork(job)
+			case "C":
+				w.emailWork(job)
+			}
