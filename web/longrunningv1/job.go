@@ -17,3 +17,9 @@ type Job struct {
 type Log struct {
 	ClientTime time.Time `json:"client_time"`
 }
+
+// CallBack is for worker-B
+type CallBack struct {
+	CallBackURL string `json:"callback_url"`
+}
+
