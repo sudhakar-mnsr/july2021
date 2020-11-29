@@ -77,3 +77,9 @@ func (w *Workers) callbackWork(job models.Job) {
 	time.Sleep(10 * time.Second)
 	log.Printf("Worker %s: posting the data back to the given callback..., JOB: %s", job.Type, job.ID)
 }
+
+func (w *Workers) emailWork(job models.Job) {
+	log.Printf("Worker %s: sending the email..., JOB: %s", job.Type, job.ID)
+	time.Sleep(2 * time.Second)
+	log.Printf("Worker %s: sent the email successfully, JOB: %s", job.Type, job.ID)
+}
