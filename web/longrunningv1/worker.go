@@ -64,3 +64,10 @@ func (w *Workers) run() {
 	wait := make(chan bool)
 	<-wait // Run long-running worker
 }
+
+func (w *Workers) dbWork(job models.Job) {
+	result := job.ExtraData.(map[string]interface{})
+	log.Printf("Worker %s: extracting data..., JOB: %s", job.Type, result)
+	time.Sleep(2 * time.Second)
+	log.Printf("Worker %s: saving data to database..., JOB: %s", job.Type, job.ID)
+}
