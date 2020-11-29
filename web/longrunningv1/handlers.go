@@ -79,3 +79,11 @@ func (s *JobServer) asyncMailHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
+
+func (s *JobServer) publish(jsonBody []byte) error {
+	message := amqp.Publishing{
+		ContentType: "application/json",
+		Body:        jsonBody,
+	}
+	err := s.Channel.Publish(
+		"",        // exchange
