@@ -33,3 +33,11 @@ func (s *JobServer) asyncDBHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	handleError(err, "JSON body creation failed")
 
+	if s.publish(jsonBody) == nil {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(jsonBody)
+	} else {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+}
