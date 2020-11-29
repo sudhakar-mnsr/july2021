@@ -27,3 +27,9 @@ func (s *JobServer) asyncDBHandler(w http.ResponseWriter, r *http.Request) {
 	clientTime := time.Unix(unixTime, 0)
 	handleError(err, "Error while converting client time")
 
+	jsonBody, err := json.Marshal(models.Job{ID: jobID,
+		Type:      "A",
+		ExtraData: models.Log{ClientTime: clientTime},
+	})
+	handleError(err, "JSON body creation failed")
+
