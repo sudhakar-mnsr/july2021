@@ -23,3 +23,7 @@ type CallBack struct {
 	CallBackURL string `json:"callback_url"`
 }
 
+// Mail is for worker-C
+type Mail struct {
+	EmailAddress string `json:"email_address"`
+}
