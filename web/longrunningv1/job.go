@@ -12,3 +12,8 @@ type Job struct {
 	Type      string      `json:"type"`
 	ExtraData interface{} `json:"extra_data"`
 }
+
+// Log is for Worker-A
+type Log struct {
+	ClientTime time.Time `json:"client_time"`
+}
