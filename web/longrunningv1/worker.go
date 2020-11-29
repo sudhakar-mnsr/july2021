@@ -20,3 +20,13 @@ func (w *Workers) run() {
 	channel, err := w.conn.Channel()
 	handleError(err, "Fetching channel failed")
 	defer channel.Close()
+
+	jobQueue, err := channel.QueueDeclare(
+		queueName, // Name of the queue
+		false,     // Message is persisted or not
+		false,     // Delete message when unused
+		false,     // Exclusive
+		false,     // No Waiting time
+		nil,       // Extra args
+	)
+	handleError(err, "Job queue fetch failed")
