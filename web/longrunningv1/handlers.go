@@ -17,3 +17,13 @@ type JobServer struct {
 	Channel *amqp.Channel
 	Conn    *amqp.Connection
 }
+
+func (s *JobServer) asyncDBHandler(w http.ResponseWriter, r *http.Request) {
+	jobID, err := uuid.NewRandom()
+	queryParams := r.URL.Query()
+
+	// Ex: client_time: 1569174071
+	unixTime, err := strconv.ParseInt(queryParams.Get("client_time"), 10, 64)
+	clientTime := time.Unix(unixTime, 0)
+	handleError(err, "Error while converting client time")
+
