@@ -40,3 +40,13 @@ func (w *Workers) run() {
 		false,         // no-wait
 		nil,           // args
 	)
+
+	go func() {
+		for message := range messages {
+
+			job := models.Job{}
+			err = json.Unmarshal(message.Body, &job)
+
+			log.Printf("Workers received a message from the queue: %s", job)
+			handleError(err, "Unable to load queue message")
+
