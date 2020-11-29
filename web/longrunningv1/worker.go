@@ -14,3 +14,9 @@ import (
 type Workers struct {
 	conn *amqp.Connection
 }
+
+func (w *Workers) run() {
+	log.Printf("Workers are booted up and running")
+	channel, err := w.conn.Channel()
+	handleError(err, "Fetching channel failed")
+	defer channel.Close()
