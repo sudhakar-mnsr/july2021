@@ -65,3 +65,10 @@ func main() {
 	router.HandleFunc("/job/callback", jobServer.asyncCallbackHandler)
 	router.HandleFunc("/job/status", jobServer.statusHandler)
 
+	httpServer := &http.Server{
+		Handler:      router,
+		Addr:         hostString,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
