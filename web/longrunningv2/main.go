@@ -33,3 +33,11 @@ func getServer(name string) JobServer {
 	jobQueue, err := channel.QueueDeclare(
 		name,  // Name of the queue
 		false, // Message is persisted or not
+		false, // Delete message when unused
+		false, // Exclusive
+		false, // No Waiting time
+		nil,   // Extra args
+	)
+	handleError(err, "Job queue creation failed")
+	return JobServer{Conn: conn, Channel: channel, Queue: jobQueue}
+}
