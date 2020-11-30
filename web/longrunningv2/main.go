@@ -58,3 +58,10 @@ func main() {
 		workerProcess.run()
 	}(jobServer.Conn)
 
+	router := mux.NewRouter()
+	// Attach handlers
+	router.HandleFunc("/job/database", jobServer.asyncDBHandler)
+	router.HandleFunc("/job/mail", jobServer.asyncMailHandler)
+	router.HandleFunc("/job/callback", jobServer.asyncCallbackHandler)
+	router.HandleFunc("/job/status", jobServer.statusHandler)
+
