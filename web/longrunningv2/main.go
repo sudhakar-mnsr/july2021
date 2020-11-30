@@ -41,3 +41,11 @@ func getServer(name string) JobServer {
 	handleError(err, "Job queue creation failed")
 	return JobServer{Conn: conn, Channel: channel, Queue: jobQueue}
 }
+
+func main() {
+	jobServer := getServer(queueName)
+	jobServer.redisClient = redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
