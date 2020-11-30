@@ -49,3 +49,12 @@ func main() {
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
+
+	// Start Workers
+	go func(conn *amqp.Connection) {
+		workerProcess := Workers{
+			conn: jobServer.Conn,
+		}
+		workerProcess.run()
+	}(jobServer.Conn)
+
