@@ -18,3 +18,11 @@ func handleError(err error, msg string) {
 		log.Fatalf("%s: %s", msg, err)
 	}
 }
+
+func getServer(name string) JobServer {
+	/*
+		Creates a server object and initiates
+		the Channel and Queue details to publish messages
+	*/
+	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	handleError(err, "Dialing failed to RabbitMQ broker")
