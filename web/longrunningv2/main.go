@@ -72,3 +72,11 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
+	// Run HTTP server
+	log.Fatal(httpServer.ListenAndServe())
+
+	// Cleanup resources
+	defer jobServer.Channel.Close()
+	defer jobServer.Conn.Close()
+
+}
