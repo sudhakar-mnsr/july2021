@@ -26,3 +26,10 @@ func getServer(name string) JobServer {
 	*/
 	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	handleError(err, "Dialing failed to RabbitMQ broker")
+
+	channel, err := conn.Channel()
+	handleError(err, "Fetching channel failed")
+
+	jobQueue, err := channel.QueueDeclare(
+		name,  // Name of the queue
+		false, // Message is persisted or not
