@@ -12,3 +12,10 @@ import (
 	"github.com/streadway/amqp"
 )
 
+// JobServer holds handler functions
+type JobServer struct {
+	Queue       amqp.Queue
+	Channel     *amqp.Channel
+	Conn        *amqp.Connection
+	redisClient *redis.Client
+}
