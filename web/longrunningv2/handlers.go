@@ -60,3 +60,13 @@ func (s *JobServer) asyncCallbackHandler(w http.ResponseWriter, r *http.Request)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
+
+func (s *JobServer) asyncMailHandler(w http.ResponseWriter, r *http.Request) {
+	jobID, err := uuid.NewRandom()
+
+	jsonBody, err := json.Marshal(models.Job{ID: jobID,
+		Type:      "C",
+		ExtraData: "",
+	})
+	handleError(err, "JSON body creation failed")
+
