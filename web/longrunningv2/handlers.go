@@ -70,3 +70,13 @@ func (s *JobServer) asyncMailHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	handleError(err, "JSON body creation failed")
 
+	err = s.publish(jsonBody)
+
+	if err == nil {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(jsonBody)
+	} else {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+}
