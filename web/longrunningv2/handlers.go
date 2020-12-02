@@ -89,3 +89,11 @@ func (s *JobServer) publish(jsonBody []byte) error {
 	err := s.Channel.Publish(
 		"",        // exchange
 		queueName, // routing key(Queue)
+		false,     // mandatory
+		false,     // immediate
+		message,
+	)
+
+	handleError(err, "Error while generating JobID")
+	return err
+}
