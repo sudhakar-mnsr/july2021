@@ -103,3 +103,9 @@ func (s *JobServer) statusHandler(w http.ResponseWriter, r *http.Request) {
 	// fetch UUID from query
 	uuid := queryParams.Get("uuid")
 	w.Header().Set("Content-Type", "application/json")
+	jobStatus := s.redisClient.Get(uuid)
+	status := map[string]string{"ID": uuid, "Status": jobStatus.Val()}
+	response, err := json.Marshal(status)
+	handleError(err, "Cannot create response for client")
+	w.Write(response)
+}
