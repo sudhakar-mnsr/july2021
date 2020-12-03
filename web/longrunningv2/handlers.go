@@ -97,3 +97,9 @@ func (s *JobServer) publish(jsonBody []byte) error {
 	handleError(err, "Error while generating JobID")
 	return err
 }
+
+func (s *JobServer) statusHandler(w http.ResponseWriter, r *http.Request) {
+	queryParams := r.URL.Query()
+	// fetch UUID from query
+	uuid := queryParams.Get("uuid")
+	w.Header().Set("Content-Type", "application/json")
