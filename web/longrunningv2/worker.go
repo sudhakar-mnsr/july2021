@@ -20,3 +20,10 @@ type Workers struct {
 func (w *Workers) run() {
 	log.Printf("Workers are booted up and running")
 	channel, err := w.conn.Channel()
+	w.redisClient = redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+	handleError(err, "Fetching channel failed")
+	defer channel.Close()
