@@ -64,3 +64,11 @@ func (w *Workers) run() {
 				w.callbackWork(job)
 			case "C":
 				w.emailWork(job)
+			}
+		}
+	}()
+
+	defer w.conn.Close()
+	wait := make(chan bool)
+	<-wait // Run long-running worker
+}
