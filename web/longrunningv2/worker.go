@@ -78,3 +78,7 @@ func (w *Workers) dbWork(job models.Job) {
 	w.redisClient.Set(job.ID.String(), "STARTED", 0)
 	log.Printf("Worker %s: extracting data..., JOB: %s", job.Type, result)
 	w.redisClient.Set(job.ID.String(), "IN PROGRESS", 0)
+	time.Sleep(2 * time.Second)
+	log.Printf("Worker %s: saving data to database..., JOB: %s", job.Type, job.ID)
+	w.redisClient.Set(job.ID.String(), "DONE", 0)
+}
