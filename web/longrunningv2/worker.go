@@ -72,3 +72,9 @@ func (w *Workers) run() {
 	wait := make(chan bool)
 	<-wait // Run long-running worker
 }
+
+func (w *Workers) dbWork(job models.Job) {
+	result := job.ExtraData.(map[string]interface{})
+	w.redisClient.Set(job.ID.String(), "STARTED", 0)
+	log.Printf("Worker %s: extracting data..., JOB: %s", job.Type, result)
+	w.redisClient.Set(job.ID.String(), "IN PROGRESS", 0)
