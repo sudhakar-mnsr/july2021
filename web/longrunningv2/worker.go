@@ -37,3 +37,13 @@ func (w *Workers) run() {
 		nil,       // Extra args
 	)
 	handleError(err, "Job queue fetch failed")
+
+	messages, err := channel.Consume(
+		jobQueue.Name, // queue
+		"",            // consumer
+		true,          // auto-acknowledge
+		false,         // exclusive
+		false,         // no-local
+		false,         // no-wait
+		nil,           // args
+	)
