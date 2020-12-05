@@ -91,3 +91,8 @@ func (w *Workers) callbackWork(job models.Job) {
 	log.Printf("Worker %s: posting the data back to the given callback..., JOB: %s", job.Type, job.ID)
 	w.redisClient.Set(job.ID.String(), "DONE", 0)
 }
+
+func (w *Workers) emailWork(job models.Job) {
+	w.redisClient.Set(job.ID.String(), "STARTED", 0)
+	log.Printf("Worker %s: sending the email..., JOB: %s", job.Type, job.ID)
+	w.redisClient.Set(job.ID.String(), "IN PROGRESS", 0)
