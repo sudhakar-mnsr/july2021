@@ -82,3 +82,8 @@ func (w *Workers) dbWork(job models.Job) {
 	log.Printf("Worker %s: saving data to database..., JOB: %s", job.Type, job.ID)
 	w.redisClient.Set(job.ID.String(), "DONE", 0)
 }
+
+func (w *Workers) callbackWork(job models.Job) {
+	w.redisClient.Set(job.ID.String(), "STARTED", 0)
+	log.Printf("Worker %s: performing some long running process..., JOB: %s", job.Type, job.ID)
+	w.redisClient.Set(job.ID.String(), "IN PROGRESS", 0)
