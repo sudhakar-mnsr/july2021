@@ -18,3 +18,12 @@ type Log struct {
 	ClientTime time.Time `json:"client_time"`
 }
 
+// CallBack is for worker-B
+type CallBack struct {
+	CallBackURL string `json:"callback_url"`
+}
+
+// Mail is for worker-C
+type Mail struct {
+	EmailAddress string `json:"email_address"`
+}
