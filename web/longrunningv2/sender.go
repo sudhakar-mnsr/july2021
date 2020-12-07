@@ -30,3 +30,12 @@ func main() {
 		false,  // No Waiting time
 		nil,    // Extra args
 	)
+
+	handleError(err, "Queue creation failed")
+
+	serverTime := time.Now()
+	message := amqp.Publishing{
+		ContentType: "text/plain",
+		Body:        []byte(serverTime.String()),
+	}
+
