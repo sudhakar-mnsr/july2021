@@ -39,3 +39,14 @@ func main() {
 		Body:        []byte(serverTime.String()),
 	}
 
+	err = channel.Publish(
+		"",             // exchange
+		testQueue.Name, // routing key(Queue)
+		false,          // mandatory
+		false,          // immediate
+		message,
+	)
+
+	handleError(err, "Failed to publish a message")
+	log.Println("Successfully published a message to the queue")
+}
