@@ -12,3 +12,12 @@ func handleError(err error, msg string) {
 		log.Fatalf("%s: %s", msg, err)
 	}
 }
+
+func main() {
+	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	handleError(err, "Dialing failed to RabbitMQ broker")
+	defer conn.Close()
+
+	channel, err := conn.Channel()
+	handleError(err, "Fetching channel failed")
+	defer channel.Close()
