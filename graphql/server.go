@@ -16,3 +16,13 @@ type Player struct {
 	Location       string   `json:"location"`
 	LevelsUnlocked []string `json:"levelsUnlocked"`
 }
+
+var players = []Player{
+	Player{ID: 123, Name: "Pablo", HighScore: 1100, IsOnline: true, Location: "Italy"},
+	Player{ID: 230, Name: "Dora", HighScore: 2100, IsOnline: false, Location: "Germany"},
+}
+
+var playerObject = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name: "Player",
+		Fields: graphql.Fields{
