@@ -22,3 +22,10 @@ func main() {
 
 	// make a request to GitHub API
 	req := graphql.NewRequest(`
+		query {
+			license(key: "apache-2.0") {
+				name
+				description
+			}
+		}
+`)
