@@ -29,3 +29,10 @@ func main() {
 			}
 		}
 `)
+
+
+	var GithubToken = os.Getenv("GITHUB_TOKEN")
+	req.Header.Add("Authorization", "bearer "+GithubToken)
+
+	// define a Context for the request
+	ctx := context.Background()
