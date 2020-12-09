@@ -15,3 +15,10 @@ type Response struct {
 		Description string `json:"description"`
 	} `json:"license"`
 }
+
+func main() {
+	// create a client (safe to share across requests)
+	client := graphql.NewClient("https://api.github.com/graphql")
+
+	// make a request to GitHub API
+	req := graphql.NewRequest(`
