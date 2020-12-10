@@ -35,3 +35,15 @@ var playerObject = graphql.NewObject(
 			"highScore": &graphql.Field{
 				Type: graphql.String,
 			},
+			"isOnline": &graphql.Field{
+				Type: graphql.Boolean,
+			},
+			"location": &graphql.Field{
+				Type: graphql.String,
+			},
+			"levelsUnlocked": &graphql.Field{
+				Type: graphql.NewList(graphql.String),
+			},
+		},
+	},
+)
