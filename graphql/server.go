@@ -64,3 +64,12 @@ func main() {
 	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
 	schema, _ := graphql.NewSchema(schemaConfig)
 
+	h := handler.New(&handler.Config{
+		Schema:   &schema,
+		Pretty:   true,
+		GraphiQL: true,
+	})
+
+	http.Handle("/graphql", h)
+	http.ListenAndServe(":8080", nil)
+}
