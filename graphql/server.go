@@ -47,3 +47,15 @@ var playerObject = graphql.NewObject(
 		},
 	},
 )
+
+func main() {
+	// Schema
+	fields := graphql.Fields{
+		"players": &graphql.Field{
+			Type:        graphql.NewList(playerObject),
+			Description: "All players",
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				return players, nil
+			},
+		},
+	}
