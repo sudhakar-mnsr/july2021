@@ -26,3 +26,12 @@ var playerObject = graphql.NewObject(
 	graphql.ObjectConfig{
 		Name: "Player",
 		Fields: graphql.Fields{
+			"id": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"name": &graphql.Field{
+				Type: graphql.String,
+			},
+			"highScore": &graphql.Field{
+				Type: graphql.String,
+			},
