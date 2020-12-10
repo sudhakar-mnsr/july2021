@@ -59,3 +59,8 @@ func main() {
 			},
 		},
 	}
+
+	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
+	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
+	schema, _ := graphql.NewSchema(schemaConfig)
+
