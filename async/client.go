@@ -8,3 +8,8 @@ import (
 	micro "github.com/micro/go-micro"
 )
 
+// ProcessEvent processes a weather alert
+func ProcessEvent(ctx context.Context, event *proto.Event) error {
+	log.Println("Got alert:", event)
+	return nil
+}
