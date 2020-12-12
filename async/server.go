@@ -26,3 +26,11 @@ func main() {
 			})
 		}
 	}()
+	// Init will parse the command line flags.
+	service.Init()
+
+	// Run the server
+	if err := service.Run(); err != nil {
+		log.Println(err)
+	}
+}
