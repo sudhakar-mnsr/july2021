@@ -16,3 +16,13 @@ func main() {
 	)
 	p := micro.NewPublisher("alerts", service.Client())
 
+	go func() {
+		for now := range time.Tick(15 * time.Second) {
+			log.Println("Publishing weather alert to Topic: alerts")
+			p.Publish(context.TODO(), &proto.Event{
+				City:        "Munich",
+				Timestamp:   now.UTC().Unix(),
+				Temperature: 2,
+			})
+		}
+	}()
