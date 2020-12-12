@@ -9,3 +9,10 @@ import (
 	micro "github.com/micro/go-micro"
 )
 
+func main() {
+	// Create a new service. Optionally include some options here.
+	service := micro.NewService(
+		micro.Name("weather"),
+	)
+	p := micro.NewPublisher("alerts", service.Client())
+
