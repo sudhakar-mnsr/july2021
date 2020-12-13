@@ -31,3 +31,9 @@ func main() {
 		Message: rsp.Result,
 		Key:     "111023043350789514532147",
 	})
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Print response
+	fmt.Println(rsp.Result)
+}
