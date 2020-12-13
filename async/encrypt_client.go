@@ -24,3 +24,10 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	// Print response
+	fmt.Println(rsp.Result)
+
+	rsp, err = encrypter.Decrypt(context.TODO(), &proto.Request{
+		Message: rsp.Result,
+		Key:     "111023043350789514532147",
+	})
