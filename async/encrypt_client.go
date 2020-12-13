@@ -16,3 +16,11 @@ func main() {
 
 	// Create new encrypter client
 	encrypter := proto.NewEncrypterService("encrypter", service.Client())
+	// Call the encrypter
+	rsp, err := encrypter.Encrypt(context.TODO(), &proto.Request{
+		Message: "I am a Message",
+		Key:     "111023043350789514532147",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
