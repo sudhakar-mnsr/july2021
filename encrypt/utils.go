@@ -18,3 +18,8 @@ func EncryptString(key, text string) string {
 		panic(err)
 	}
 	plaintext := []byte(text)
+	cfb := cipher.NewCFBEncrypter(block, initVector)
+	ciphertext := make([]byte, len(plaintext))
+	cfb.XORKeyStream(ciphertext, plaintext)
+	return base64.StdEncoding.EncodeToString(ciphertext)
+}
