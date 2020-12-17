@@ -39,3 +39,15 @@ func main() {
 		}
 		// Convert struct to JSON using Marshal
 		jsonData, _ := json.Marshal(book)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(jsonData)
+	})
+	s := &http.Server{
+		Addr:           ":8000",
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	log.Fatal(s.ListenAndServe())
+}
