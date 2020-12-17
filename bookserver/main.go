@@ -31,3 +31,11 @@ func main() {
 	http.HandleFunc("/api/books", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("%q", r.UserAgent())
 		// Fill the book details
+		book := Book{
+			ID:            123,
+			ISBN:          "0-201-03801-3",
+			Author:        "Donald Knuth",
+			PublishedYear: "1968",
+		}
+		// Convert struct to JSON using Marshal
+		jsonData, _ := json.Marshal(book)
