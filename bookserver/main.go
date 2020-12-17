@@ -24,3 +24,10 @@ func main() {
 		fmt.Printf("error opening file: %v", err)
 	}
 	defer f.Close()
+	// This attaches program logs to file
+	log.SetOutput(f)
+
+	// Function handler for handling requests
+	http.HandleFunc("/api/books", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%q", r.UserAgent())
+		// Fill the book details
