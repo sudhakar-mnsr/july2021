@@ -25,3 +25,13 @@ resource "aws_api_gateway_method_response" "test" {
   status_code = "200"
 }
 
+// Integration request configuration
+resource "aws_api_gateway_integration" "test" {
+   rest_api_id = aws_api_gateway_rest_api.test.id
+   resource_id = aws_api_gateway_method.test.resource_id
+   http_method = aws_api_gateway_method.test.http_method
+
+   integration_http_method = "GET"
+   type                    = "HTTP"
+   uri                     = "http://${aws_instance.api_server.public_dns}/api/books"
+ }
