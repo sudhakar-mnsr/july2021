@@ -1,4 +1,12 @@
-resource "aws_api_gateway_rest_api" "test" {
+// Deploy API on Gateway with test environment
+resource "aws_api_gateway_deployment" "test" {
+   depends_on = [
+     aws_api_gateway_integration.test
+   ]
+
+   rest_api_id = aws_api_gateway_rest_api.test.id
+   stage_name  = "test"
+ }resource "aws_api_gateway_rest_api" "test" {
   name        = "EC2Example"
   description = "Terraform EC2 REST API Example"
 
