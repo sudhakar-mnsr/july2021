@@ -34,3 +34,11 @@ func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		return secretKey, nil
 	})
+	if err != nil {
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte("Access Denied; Please check the access token"))
+		return
+	}
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		// If token is valid
+		response := make(map[string]string)
