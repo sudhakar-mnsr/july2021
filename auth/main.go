@@ -70,3 +70,9 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 				"ExpiresAt": 15000,
 				"IssuedAt":  time.Now().Unix(),
 			}
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+			tokenString, err := token.SignedString(secretKey)
+			if err != nil {
+				w.WriteHeader(http.StatusBadGateway)
+				w.Write([]byte(err.Error()))
+			}
