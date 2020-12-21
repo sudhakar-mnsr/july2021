@@ -76,3 +76,8 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusBadGateway)
 				w.Write([]byte(err.Error()))
 			}
+			response := Response{Token: tokenString, Status: "success"}
+			responseJSON, _ := json.Marshal(response)
+			w.WriteHeader(http.StatusOK)
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(responseJSON)
