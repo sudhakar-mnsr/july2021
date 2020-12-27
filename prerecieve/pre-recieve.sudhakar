@@ -16,3 +16,125 @@
 # Count of issues found in parsing
 found=0
 
+# Define list of REGEX to be searched and blocked
+regex_list=(
+
+  # block any private key file
+  #'(\-){5}BEGIN\s?(RSA|OPENSSH|DSA|EC|PGP)?\s?PRIVATE KEY\s?(BLOCK)?(\-){5}.*'
+  '(\-){5}BEGIN\s?(RSA|OPENSSH|DSA|EC|PGP|SSH2)?\s?PRIVATE KEY\s?(BLOCK)?(\-){5}.*'
+  # block AWS API Keys
+  'AKIA[0-9A-Z]{16}'
+  # block AWS Secret Access Key (TODO: adjust to not find validd Git SHA1s; false positives)
+  '([^A-Za-z0-9/+=])?([A-Za-z0-9/+=]{40})([^A-Za-z0-9/+=])?'
+  '(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'
+  "(\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?"
+  "(\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?"
+  # block confidential content
+  #'CONFIDENTIAL'
+  '\\bprivate_key.*\\b'
+  # block terraform files
+  #'.terraform'
+  #'terraform.tfstate'
+  #'terraform.tfstate.backup'
+  #'[a-z0-9A-Z].tfvars'
+  #Gcp key files
+  '^(.(.*\.p12$|.*\.pfx))*$'i
+  #AzureKeys
+  #AzureKeys
+"(\"|')[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}(\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][o|O][n|N][m|M][i|I][c|C][r|R][o|O][s|S][o|O][f|F][t|T][.][c|C][o|O][m|M](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][b|B][l|L][o|O][b|B][.][c|C][o|O][r|R][e|E][.][w|W][i|I][n|N][d|D][o|O][w|W][s|S][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][q|Q][u|U][e|E][u|U][e|E][.][c|C][o|O][r|R][e|E][.][w|W][i|I][n|N][d|D][o|O][w|W][s|S][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][t|T][a|A][b|B][l|L][e|E][.][c|C][o|O][r|R][e|E][.][w|W][i|I][n|N][d|D][o|O][w|W][s|S][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][d|D][a|A][t|T][a|A][b|B][a|A][s|S][e|E][.][w|W][i|I][n|N][d|D][o|O][w|W][s|S][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][s|S][e|E][r|R][v|V][i|I][c|C][e|E][b|B][u|U][s|S][.][w|W][i|I][n|N][d|D][o|O][w|W][s|S][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][t|T][i|I][m|M][e|E][s|S][e|E][r|R][i|I][e|E][s|S][.][a|A][z|Z][u|U][r|R][e|E][.][c|C][o|O][m|M](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][a|T][c|C][c|C][e|E][s|S][s|S][c|C][o|O][n|N][t|T][r|R][o|O][l|L][.][w|W][i|I][n|N][d|D][o|O][w|W][s|S][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][a|A][z|Z][u|U][r|R][e|E][h|H][d|D][i|I][n|N][s|S][i|I][g|G][h|H][t|T][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][c|C][l|L][o|O][u|U][d|D][a|A][p|P][p|P][.][a|A][z|Z][u|U][r|R][e|E][.][c|C][o|O][m|M](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][c|C][l|L][o|O][u|U][d|D][a|A][p|P][p|P][.][n|N][e|E][t|T](\"|')"
+"(\"|').*[0-9a-zA-Z]{2,256}[.][d|D][o|O][c|C][u|U][m|M][e|E][n|N][t|T][s|S][.][a|A][z|Z][u|U][r|R][e|E][.][c|C][o|O][m|M](\"|')"
+"(\"|')[A-Z0-9a-z[:punct:]]{32}(\"|')$"
+"(\"|')[A-Z0-9a-z[:punct:]]{88}(\"|')$"
+)
+
+
+# Concatenate regex_list
+separator="|"
+regex="$( printf "${separator}%s" "${regex_list[@]}" )"
+# remove leading separator
+regex="${regex:${#separator}}"
+# Commit sha with all zeros
+zero_commit='0000000000000000000000000000000000000000'
+# ------------------------------------------------------------------------------
+# Pre-receive hook
+if [ "${GIT_PUSH_OPTION_0}" = "skipscan" ]; then
+   exit 0
+fi
+# ------------------------------------------------------------------------------
+while read oldrev newrev refname; do
+  # # Debug payload
+  # echo -e "${oldrev} ${newrev} ${refname}\n"
+
+  # ----------------------------------------------------------------------------
+  # Get the list of all the commits
+  # ----------------------------------------------------------------------------
+
+  # Check if a zero sha
+  if [ "${oldrev}" = "${zero_commit}" ]; then
+    # List everything reachable from newrev but not any heads
+    span=`git rev-list $(git for-each-ref --format='%(refname)' refs/heads/* | sed 's/^/\^/') ${newrev}`
+    output1=`git for-each-ref --format='%(refname)' refs/heads/*`
+    output2=`git for-each-ref --format='%(refname)' refs/heads/* | sed 's/^/\^/'`
+    echo "from if part"
+    echo "+++++++++++++++++++++++++++++++++++++++++++++++++"
+    echo newrev = ${newrev}
+    echo refname = ${refname}
+    echo output1 = ${output1}
+    echo output2 = ${output2}
+    echo span = $span
+    echo "+++++++++++++++++++++++++++++++++++++++++++++++++"
+   else
+    span=`git rev-list ${oldrev}..${newrev}`
+    echo "from else part" 
+    echo "*************************************************"
+    echo newrev = ${newrev}
+    echo oldrev = ${oldrev}
+    echo $span
+    echo "*************************************************"
+  fi
+
+  # ----------------------------------------------------------------------------
+  # Iterate over all commits in the push
+  # ----------------------------------------------------------------------------
+  for sha1 in ${span}; do
+    # Use extended regex to search for a match
+    match=`git diff-tree -r -p --no-color --no-commit-id --diff-filter=d ${sha1} | grep -nE "(${regex})"`
+
+    sensitive_commits=""
+    # Verify its not empty
+    if [ "${match}" != "" ]; then
+      # # Debug match
+      # echo -e "${match}\n"
+      sensitive_commits+="${sha1}, "
+
+      found=$((${found} + 1))
+    fi
+  done
+done
+
+# ------------------------------------------------------------------------------
+# Verify count of found errors
+# ------------------------------------------------------------------------------
+if [ ${found} -gt 0 ]; then
+  # Found errors, exit with error
+  echo -e "\e[1;31m [POLICY BLOCKED] You're trying to commit some confidential information that should not be pushed to your remote repository. \e[0m "
+  echo -e "\e[1;31m [POLICY BLOCKED] Please verify your committed data. if you feel that your commit data doesn't have any secrets pleae use --push-option=skipscan \e[0m "
+  echo ${sensitive_commits}
+  exit 1
+
+else
+  # No errors found, exit with success
+  exit 0
+fi
+
