@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#
+# ⚠ USE WITH CAUTION ⚠
+#
+# Pre-receive hook that will block any new commits that contain passwords,
+# tokens, or other confidential information matched by regex
+#
+# More details on pre-receive hooks and how to apply them can be found on
+# https://git.io/fNLf0
+#
+
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+# Count of issues found in parsing
+found=0
+
