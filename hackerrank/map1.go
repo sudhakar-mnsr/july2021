@@ -13,7 +13,7 @@ users := make(map[string]user)
 // Add key/value pairs to the map
 users["Roy"] = user{"Rob", "Roy"}
 users["Ford"] = user{"Henry", "Ford"}
-users["Roy"] = user{"Mickey", "Mouse"}
+users["Mouse"] = user{"Mickey", "Mouse"}
 users["Roy"] = user{"Michael", "Jackson"}
 
 mouse := users["Mouse"]
